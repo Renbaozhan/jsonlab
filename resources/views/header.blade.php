@@ -5,7 +5,7 @@
               Json.<span style="color:#4A5560;">cn</span></a>
         </div>
         <nav class="col-md-7" style="padding:10px 0; "  align="right">
-            <div  class="navi" >
+            <div id="nav"  class="navi" >
                 <a href="/" data-placement="bottom">在线解析</a>
                 <!--<a href="http://lab.json.cn/" target="_blank"  data-placement="bottom">
                   <span class="red">JSON实验室</span>

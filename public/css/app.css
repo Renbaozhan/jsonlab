@@ -1,20 +1,45 @@
 @charset "UTF-8";
 body{
-    font-family: menlo;
-    color: #4A5560;
+    font-family: menlo,Consolas,monospace, "Helvetica Neue",Helvetica;
+    color: #39414F;
     font-size: 12px;
-    background-color: #F6F7FB;
+
 }
 a{
     display: inline-block;
     text-decoration: none;
     font-family: Menlo,Monaco,Consolas;
-    color: #1BAAE4;
+    color: #39414F;
     cursor:pointer;
 }
 a:hover{
     text-decoration: none;
     color: #47A7E6;
+}
+.green{
+    color:#59d9a4;
+
+}
+.green-light{
+    color:#41DFC4;
+}
+.red{
+    color:#f478b8;
+}
+.red-light{
+    color:#FF65AA;
+}
+.blue{
+    color:#8378f4;
+}
+.blue-light{
+    color:#44A6F8;
+}
+.purple{
+    color:#E270D5;
+}
+.yellow{
+    color: #FFC147;
 }
 .header{
     border-bottom: solid 1px #E5EBEE;
@@ -28,16 +53,17 @@ a:hover{
     text-decoration: none;
     font-weight: bold;
     font-size: 20px;
-    color: #0fd59d;
+    color: #41DFC4;
     padding: 10px;
 }
 .logo:hover{
-    color: #0fd59d;
+    color: #41DFC4;
 }
 .navi{
     padding:5px 20px;
     font-size:12px;
-    font-weight:bold;font-family:Menlo,Monaco,Consolas,"Courier New",monospace, "Helvetica Neue",Helvetica,Arial,sans-serif,'骞煎渾';
+    font-weight:bold;
+    font-family:Menlo,Monaco,Consolas,"Courier New",monospace, "Helvetica Neue",Helvetica,Arial,sans-serif,'微软雅黑';
 }
 .navi a{
     padding: 0px 20px;
@@ -45,8 +71,15 @@ a:hover{
 }
 .tool a{
     padding: 0px 20px;
+
     color: #999;
 }
 .navi a:hover{
     color: #888;
+}
+.main{
+    margin-top:40px;
+    width: 90%;
+    background-color: #fff;
+    box-shadow: 0 0 1px #ddd;
 }
