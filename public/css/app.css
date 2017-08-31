@@ -1,20 +1,19 @@
 @charset "UTF-8";
 body{
-    font-family: menlo,Consolas,monospace, "Helvetica Neue",Helvetica;
-    color: #39414F;
+    font-family: menlo,monospace, Tahoma,"微软雅黑","幼圆";
+    color: #666;
     font-size: 12px;
 
 }
 a{
     display: inline-block;
     text-decoration: none;
-    font-family: Menlo,Monaco,Consolas;
     color: #39414F;
     cursor:pointer;
 }
 a:hover{
     text-decoration: none;
-    color: #47A7E6;
+    color: #44A6F8;
 }
 .green{
     color:#59d9a4;
@@ -24,10 +23,16 @@ a:hover{
     color:#41DFC4;
 }
 .red{
-    color:#f478b8;
+    color:#FF585D;
 }
 .red-light{
     color:#FF65AA;
+}
+.red-hot{
+    color:#FF1B65;
+}
+.pink{
+    color:#FF6CAF;
 }
 .blue{
     color:#8378f4;
@@ -37,6 +42,9 @@ a:hover{
 }
 .purple{
     color:#E270D5;
+}
+.purple-light{
+    color:#8274F6;
 }
 .yellow{
     color: #FFC147;
@@ -63,7 +71,7 @@ a:hover{
     padding:5px 20px;
     font-size:12px;
     font-weight:bold;
-    font-family:Menlo,Monaco,Consolas,"Courier New",monospace, "Helvetica Neue",Helvetica,Arial,sans-serif,'微软雅黑';
+    font-family:monospace,'微软雅黑';
 }
 .navi a{
     padding: 0px 20px;
