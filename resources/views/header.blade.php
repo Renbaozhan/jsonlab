@@ -2,7 +2,7 @@
     <div class="row-fluid" >
         <div class="col-md-5" style="position:relative;">
             <a class="logo" href="/">
-              <span class="purple">Json.</span><span style="color:#4A5560;">cn</span></a>
+              Json.<span style="color:#4A5560;">cn</span></a>
         </div>
         <nav class="col-md-7" style="padding:10px 0; "  align="right">
             <div id="nav"  class="navi" >
