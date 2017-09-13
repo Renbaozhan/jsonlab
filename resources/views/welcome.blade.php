@@ -16,7 +16,10 @@
 .abox.current {
     background-color: #fff;
     box-shadow: 1px 0px 1px #eee;
-    border-bottom:solid 1px #ddd;
+    border-bottom:solid 1px #eee;
+    border-left: solid 1px #eee;
+    margin-left: -5px;
+    width: 102%;
     font-weight: bold;
 }
 
@@ -36,13 +39,13 @@
 @section('main')
 <main class="main container">
     <div class="row">
-        <div class="col-md-3" style="min-height: 550px;padding:0;">
-            <a class="abox current">
+        <div class="col-md-3" style="min-height: 550px;padding:0;" id="list-data" >
+            <a class="abox" v-for="item in list">
                 <div class="title">
-                    <i class="fa fa-cut"></i>
-                    中文分词
+                    <i class="@{{item.icon}}"></i>
+                    @{{item.name}}
                 </div>
-                <div class="abstract">切分中文句子和文章为单个词汇</div>
+                <div class="abstract">@{{item.note}}</div>
             </a>
             <a  class="abox">
                 <div  class="title">
@@ -80,10 +83,13 @@
                 <div class="abstract">识别无意义文本内容</div>
             </a>
         </div>
-        <div class="col-md-9" style="border-left:solid 1px #fafafa;">
+
+        <div class="col-md-9" style="border-left:solid 1px #fafafa;" id="api-data">
+
             <div style="padding:10px;text-align:center;border-bottom:solid 1px #f6f6f6;">
-                <h3>中文分词</h3>
+                <h3>@{{api.name}}</h3>
             </div>
+
             <div class="row" style="margin:10px;padding:10px 0;border-bottom:solid 1px #f6f6f6;line-height:25px;">
 
                 <div class="col-md-6">
@@ -92,15 +98,15 @@
                 </div>
                 <div class="col-md-6">
                     <div>请求方式</div>
-                    <span>POST</span>
+                    <span>@{{api.method}}</span>
                 </div>
                 <div class="col-md-6">
                     <div>单IP访问限制：</div>
-                    <span class="red-light">10次／秒</span>
+                    <span class="red-light">@{{api.ipLimit}}次／秒</span>
                 </div>
                 <div class="col-md-6">
                     <div>单日访问限制：</div>
-                    <span class="red-light">100w次／天</span>
+                    <span class="red-light">@{{api.dailyCallLimit}}次／天</span>
                 </div>
                 <div class="col-md-12">
                     <div>接口地址：</div>
@@ -109,6 +115,7 @@
                     </a>
                 </div>
             </div>
+
             <div  class="row" style="font-size:10px;padding:0 20px;border-bottom:solid 1px #f6f6f6;">
                 <div class="col-md-6" style="padding:20px;">
                     <h6>输入参数</h6>
@@ -119,34 +126,56 @@
                     <div id="result"></div>
                 </div>
             </div>
+
             <div  class="row" style="font-size:10px;padding:0 20px;">
                 <div class="col-md-6" style="padding:20px;">
                     <h6>参数说明</h6>
                     <table class="table">
                         <tr><th>参数</th><th>类型</th><th>说明</th><th>是否必须</th></tr>
-                        <tbody id="param-note"></tbody>
+                        <tbody>
+                            <tr v-for="item in api.paramNote">
+                                <td>@{{item.name}}</td>
+                                <td>@{{item.type}}</td>
+                                <td  style="width:50%">@{{item.note}}</td>
+                                <td>@{{item.require}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="col-md-6"  style="padding:20px;">
                     <h6>结果说明</h6>
                     <table class="table">
                         <tr><th>参数</th><th>类型</th><th>说明</th><th>是否必须</th></tr>
-                        <tbody id="result-note"></tbody>
+                        <tbody>
+                            <tr v-for="item in api.resultNote">
+                                <td>@{{item.name}}</td>
+                                <td>@{{item.type}}</td>
+                                <td  style="width:50%">@{{item.note}}</td>
+                                <td>@{{item.require}}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
+
             </div>
+
         </div>
+
     </div>
 </main>
 @endsection
 @section('script')
-<script src="{{ URL::asset('/') }}js/echarts-all.js"></script>
 <script src="{{ URL::asset('/') }}js/jquery.json.js"></script>
 <script>
 loadApi();
+loadList();
 function loadApi(){
     var api = {
         name:"中文分词",
+        method:'POST',
+        ipLimit:10,
+        dailyCallLimit:1000000,
+        address:'{{ URL::asset('/') }}api/wordcut',
         param:'{"token":"public","text":"张三李四"}',
         result:'{"code":200,"msg":"success","data":["张三","李四"]}',
         paramNote:[
@@ -181,39 +210,30 @@ function loadApi(){
             }
         ]
     };
+    var app = new Vue({
+        el: '#api-data',
+        data: {
+            api: api
+        }
+    });
     var param_html = new JSONFormat(api.param,4).toString();
     var result_html = new JSONFormat(api.result,4).toString();
     $('#param').html(param_html);
     $('#result').html(result_html);
-    var param_note_html = '';
-    var result_note_html = '';
-    for(var i=0;i<api.paramNote.length;i++){
-        param_note_html+="<tr>";
-        param_note_html+="<td>"+api.paramNote[i].name+"</td>";
-        param_note_html+="<td>"+api.paramNote[i].type+"</td>";
-        param_note_html+='<td  style="width:50%">'+api.paramNote[i].note+'</td>';
-        if(api.paramNote[i].require){
-            param_note_html+='<td class="red-light">'+api.paramNote[i].require+'</td>';
-        }else{
-            param_note_html+='<td>'+api.paramNote[i].require+'</td>';
-        }
-        param_note_html+="</tr>";
-    }
-    $('#param-note').html(param_note_html);
-    for(var i=0;i<api.resultNote.length;i++){
-        result_note_html+="<tr>";
-        result_note_html+="<td>"+api.resultNote[i].name+"</td>";
-        result_note_html+="<td>"+api.resultNote[i].type+"</td>";
-        result_note_html+='<td   style="width:50%">'+api.resultNote[i].note+'</td>';
-        if(api.resultNote[i].require){
-            result_note_html+='<td class="red-light">'+api.resultNote[i].require+'</td>';
-        }else{
-            result_note_html+='<td>'+api.resultNote[i].require+'</td>';
-        }
-        result_note_html+='</tr>';
-    }
-    $('#result-note').html(result_note_html);
 }
-
+function loadList(){
+    var list = [
+        {id:123,name:'中文分词',note:'切分中文句子和文章为单个词汇',icon:'fa-cut'},
+        {id:123,name:'词性标注',note:'标注显示中文词性',icon:'fa-tag'},
+        {id:123,name:'情感分析',note:'分析评论内容情感倾向',icon:'fa-heart'},
+        {id:123,name:'关键词抽取',note:'抽取长文本中的关键词',icon:'fa-file-word-o'}
+    ];
+    var app = new Vue({
+        el: '#list-data',
+        data: {
+            list: list
+        }
+    });
+}
 </script>
 @endsection
