@@ -132,9 +132,9 @@
 @section('script')
 <script src="{{ URL::asset('/') }}js/jquery.json.js"></script>
 <script>
-loadApi();
-loadList();
-function loadApi(){
+loadService();
+loadServiceList();
+function loadService(){
     var api = {
         name:"中文分词",
         method:'POST',
@@ -186,19 +186,17 @@ function loadApi(){
     $('#param').html(param_html);
     $('#result').html(result_html);
 }
-function loadList(){
-    var list = [
-        {id:1031,name:'中文分词',note:'切分中文句子和文章为单个词汇',icon:'fa fa-cut'},
-        {id:1032,name:'词性标注',note:'标注显示中文词性',icon:'fa fa-tag'},
-        {id:1033,name:'情感分析',note:'分析评论内容情感倾向',icon:'fa fa-heart'},
-        {id:1034,name:'关键词抽取',note:'抽取长文本中的关键词',icon:'fa fa-file-word-o'}
-    ];
-    var app = new Vue({
-        el: '#list-data',
-        data: {
-            list: list
-        }
+function loadServiceList(){
+    $.get('/services',function(response){
+        //var datalist = JSON.parse(response);
+        var app = new Vue({
+            el: '#list-data',
+            data: {
+                list: response
+            }
+        });
     });
+
 }
 </script>
 @endsection

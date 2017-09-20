@@ -13,10 +13,18 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('service', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->text('body');
+            $table->string('name');
+            $table->text('note');
+            $table->string('icon');
+            $table->integer('ipLimit');
+            $table->integer('dailyCallLimit');
+            $table->string('address');
+            $table->text('param');
+            $table->text('result');
+            $table->text('paramNote');
+            $table->text('resultNote');
             $table->timestamps();
         });
     }
@@ -28,6 +36,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('service');
     }
 }
