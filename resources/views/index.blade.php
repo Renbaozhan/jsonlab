@@ -40,7 +40,7 @@
 <main class="main container">
     <div class="row">
         <div class="col-md-3" style="min-height: 550px;padding:0;" id="list-data" >
-            <a class="abox" v-for="item in list">
+            <a class="abox" v-on:click="load(item.id)" :data-key="item.id" v-for="item in list">
                 <div class="title">
                     <i :class="item.icon"></i>
                     @{{item.name}}
@@ -76,7 +76,7 @@
                 <div class="col-md-12">
                     <div>接口地址：</div>
                     <a class="blue-light" style="text-decoration:underline;" href="{{ URL::asset('/') }}api/wordcut" target="_blank">
-                        {{ URL::asset('/') }}api/wordcut
+                        {{ URL::asset('/') }}@{{api.address}}
                     </a>
                 </div>
             </div>
@@ -132,71 +132,43 @@
 @section('script')
 <script src="{{ URL::asset('/') }}js/jquery.json.js"></script>
 <script>
-loadService();
-loadServiceList();
-function loadService(){
-    var api = {
-        name:"中文分词",
-        method:'POST',
-        ipLimit:10,
-        dailyCallLimit:1000000,
-        address:'{{ URL::asset('/') }}api/wordcut',
-        param:'{"token":"public","text":"张三李四"}',
-        result:'{"code":200,"msg":"success","data":["张三","李四"]}',
-        paramNote:[
-            {
-                name:"token",
-                type:"string",
-                require:true,
-                note:"用于接口身份认证及数据统计"
-            },{
-                name:"text",
-                type:"string",
-                require:true,
-                note:"待分词文本内容"
-            }
-        ],
-        resultNote:[
-            {
-                name:"code",
-                type:"int",
-                require:true,
-                note:"接口状态码，200时正常，其他值为异常，具体含义参考http状态码"
-            },{
-                name:"msg",
-                type:"string",
-                require:true,
-                note:"接口返回结果提示信息，正常为success"
-            },{
-                name:"data",
-                type:"array",
-                require:true,
-                note:"接口返回数据数组，接口数据均在此数组内"
-            }
-        ]
-    };
-    var app = new Vue({
-        el: '#api-data',
-        data: {
-            api: api
+var init_id = 1;
+var app = new Vue({
+    el: '#api-data',
+    data: {
+        api: {}
+    }
+});
+var applist = new Vue({
+    el: '#list-data',
+    data: {
+        list: []
+    },
+    methods: {
+        load: function (id) {
+            loadService(id);
         }
+    }
+
+});
+
+loadService(init_id);
+loadServiceList();
+function loadService(id){
+    $.get('/services/'+id,function(response){
+        response.paramNote = JSON.parse(response.paramNote);
+        response.resultNote = JSON.parse(response.resultNote);
+        app.api = response;
+        var param_html = new JSONFormat(response.param,4).toString();
+        var result_html = new JSONFormat(response.result,4).toString();
+        $('#param').html(param_html);
+        $('#result').html(result_html);
     });
-    var param_html = new JSONFormat(api.param,4).toString();
-    var result_html = new JSONFormat(api.result,4).toString();
-    $('#param').html(param_html);
-    $('#result').html(result_html);
 }
 function loadServiceList(){
     $.get('/services',function(response){
-        //var datalist = JSON.parse(response);
-        var app = new Vue({
-            el: '#list-data',
-            data: {
-                list: response
-            }
-        });
+        applist.list = response;
     });
-
 }
 </script>
 @endsection

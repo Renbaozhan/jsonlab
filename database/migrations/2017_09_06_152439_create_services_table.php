@@ -15,9 +15,10 @@ class CreateServicesTable extends Migration
     {
         Schema::create('service', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name',100);
             $table->text('note');
-            $table->string('icon');
+            $table->string('icon',20);
+            $table->string('method',10);
             $table->integer('ipLimit');
             $table->integer('dailyCallLimit');
             $table->string('address');
