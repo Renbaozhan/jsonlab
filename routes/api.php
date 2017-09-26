@@ -16,3 +16,4 @@ Use App\Service;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('nlp/wordcut/{text}', 'NlpController@wordcut');
