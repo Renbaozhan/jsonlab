@@ -15,12 +15,12 @@ class NlpController extends Controller
     @date 2017-09-27
     */
     public function wordcut(Request $request){
-        $ret = array();
-        $ret[] = $request->text;
+        $data = array();
+        $data[] = $request->text;
         return response()->json([
           'code'=>200,
-          'data'=>$ret,
           'message'=>'success',
+          'data'=>$data,
         ]);
     }
 }
