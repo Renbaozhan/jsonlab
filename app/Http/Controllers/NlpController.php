@@ -16,7 +16,9 @@ class NlpController extends Controller
     */
     public function wordcut(Request $request){
         $data = array();
-        $data[] = $request->text;
+        if(isset($request->text)){
+            $data[] = $request->text;
+        }
         return response()->json([
           'code'=>200,
           'message'=>'success',

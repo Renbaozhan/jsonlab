@@ -21,4 +21,4 @@ Route::put('services/{service}', 'ServiceController@update');
 Route::delete('services/{service}', 'ServiceController@delete');
 
 //nlp api
-Route::post('nlp/wordcut', 'NlpController@wordcut');
+Route::any('nlp/wordcut', 'NlpController@wordcut');
