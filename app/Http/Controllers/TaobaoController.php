@@ -15,7 +15,7 @@ class TaobaoController extends Controller
     @date 2017-09-27
     */
     public function products(Request $request){
-        $data = $this->getProductList();
+        $data = $this->getProductList($request);
         if(isset($request->text)){
             $data[] = $request->text;
         }
@@ -26,8 +26,9 @@ class TaobaoController extends Controller
         ]);
     }
 
-    private function getProductList(){
+    private function getProductList(Request $request){
       $url = "http://gw.api.taobao.com/router/rest?";
+
       $param_arr = array(
         'sign_method' => "md5",
         'timestamp'=>date("Y-m-d H:i:s",time()),
@@ -37,6 +38,9 @@ class TaobaoController extends Controller
         'method'=> "taobao.tbk.item.get",
         'format'=> "json",
         'cat'=>'16,18',
+        'page_no'=>1,
+        'page_size'=>5,
+        'platform'=>2,
       );
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
