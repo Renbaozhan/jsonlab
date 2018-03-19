@@ -22,4 +22,3 @@ Route::delete('services/{service}', 'ServiceController@delete');
 
 //nlp api
 Route::any('nlp/wordcut', 'NlpController@wordcut');
-Route::any('taobao/products', 'TaobaoController@products');

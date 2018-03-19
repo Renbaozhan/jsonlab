@@ -17,3 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('nlp/wordcut/{text}', 'NlpController@wordcut');
+Route::any('taobao/products', 'TaobaoController@products');
