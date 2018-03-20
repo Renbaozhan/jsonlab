@@ -16,9 +16,6 @@ class TaobaoController extends Controller
     */
     public function products(Request $request){
         $data = $this->getProductList($request);
-        if(isset($request->text)){
-            $data[] = $request->text;
-        }
         return response()->json([
           'code'=>200,
           'message'=>'success',
@@ -42,6 +39,18 @@ class TaobaoController extends Controller
         'page_size'=>5,
         'platform'=>2,
       );
+      if(isset($request->q)){
+          $param_arr['q']=$request->q;
+      }
+      if(isset($request->page_no)){
+          $param_arr['page_no']=$request->page_no;
+      }
+      if(isset($request->page_size)){
+          $param_arr['page_size']=$request->page_size;
+      }
+      if(isset($request->cat)){
+          $param_arr['cat']=$request->cat;
+      }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
     }
