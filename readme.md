@@ -43,5 +43,10 @@ location / {
     try_files $uri $uri/ /index.php?$query_string;  
 } 
 
-新建表命令 
+新建创建表文件命令 
 $ php artisan make:migration create_table_tablename
+编辑创建表文件，实现up & down函数
+执行创建表
+$ php artisan migrate
+回滚命令
+php artisan migrate:rollback
