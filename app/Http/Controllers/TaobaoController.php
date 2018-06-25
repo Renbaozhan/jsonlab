@@ -24,7 +24,7 @@ class TaobaoController extends Controller
     }
 
     public function coupons(Request $request){
-      $data = $this->getCouponsList();
+      $data = $this->getCouponsList($request);
       return response()->json([
         'code'=>200,
         'message'=>'success',
@@ -32,39 +32,36 @@ class TaobaoController extends Controller
       ]);
     }
 
-    private function getProductList(){
-      $url = "http://gw.api.taobao.com/router/rest?";
-
-      $param_arr = array(
-        'sign_method' => "md5",
-        'timestamp'=>date("Y-m-d H:i:s",time()),
-        'v'=> "2.0",
-        'fields' => "num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick",
-        'app_key'=> "24789193",
-        'method'=> "taobao.tbk.item.get",
-        'format'=> "json",
-        'cat'=>'16',
-        'platform'=>2,
-      );
-      $param = $this->getParam($param_arr);
-      return json_decode(file_get_contents($url.$param),true);
+    private function getProductList(Request $request){
+      $taobao_api = "taobao.tbk.item.get";
+      return $this->getTaobaoData($request, $taobao_api);
     }
 
-    private function getCouponsList(){
+    private function getCouponsList(Request $request){
+      $taobao_api = "taobao.tbk.dg.item.coupon.get";
+      return $this->getTaobaoData($request, $taobao_api);
+    }
+
+    private function getTaobaoData(Request $request,$taobao_api){
       $url = "http://gw.api.taobao.com/router/rest?";
       $param_arr = array(
         'sign_method' => "md5",
         'timestamp'=>date("Y-m-d H:i:s",time()),
         'v'=> "2.0",
-        'cat'=>'16',
         'app_key'=> "24789193",
-        'method'=> "taobao.tbk.dg.item.coupon.get",
+        'method'=> $taobao_api,
         'format'=> "json",
         'adzone_id'=>'338254662',
         'platform'=>2,
       );
       if(isset($request->q)){
           $param_arr['q']=$request->q;
+      }
+      if(isset($request->fields)){
+          $param_arr['fields']=$request->fields;
+      }
+      if(isset($request->sort)){
+          $param_arr['sort']=$request->sort;
       }
       if(isset($request->page_no)){
           $param_arr['page_no']=$request->page_no;
