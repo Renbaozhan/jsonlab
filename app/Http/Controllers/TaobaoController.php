@@ -26,6 +26,15 @@ class TaobaoController extends Controller
         ]);
     }
 
+    public function coupons(Request $request){
+      $data = $this->getCouponsList();
+      return response()->json([
+        'code'=>200,
+        'message'=>'success',
+        'data'=>$data,
+      ]);
+    }
+
     private function getProductList(){
       $url = "http://gw.api.taobao.com/router/rest?";
       $param_arr = array(
@@ -36,7 +45,25 @@ class TaobaoController extends Controller
         'app_key'=> "24789193",
         'method'=> "taobao.tbk.item.get",
         'format'=> "json",
-        'cat'=>'16,18',
+        'cat'=>'16',
+        'platform'=>2,
+      );
+      $param = $this->getParam($param_arr);
+      return json_decode(file_get_contents($url.$param),true);
+    }
+
+    private function getCouponsList(){
+      $url = "http://gw.api.taobao.com/router/rest?";
+      $param_arr = array(
+        'sign_method' => "md5",
+        'timestamp'=>date("Y-m-d H:i:s",time()),
+        'v'=> "2.0",
+        'cat'=>'16',
+        'app_key'=> "24789193",
+        'method'=> "taobao.tbk.dg.item.coupon.get",
+        'format'=> "json",
+        'adzone_id'=>'338254662',
+        'platform'=>2,
       );
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
