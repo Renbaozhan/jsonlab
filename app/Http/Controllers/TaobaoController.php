@@ -15,10 +15,7 @@ class TaobaoController extends Controller
     @date 2017-09-27
     */
     public function products(Request $request){
-        $data = $this->getProductList();
-        if(isset($request->text)){
-            $data[] = $request->text;
-        }
+        $data = $this->getProductList($request);
         return response()->json([
           'code'=>200,
           'message'=>'success',
@@ -37,6 +34,7 @@ class TaobaoController extends Controller
 
     private function getProductList(){
       $url = "http://gw.api.taobao.com/router/rest?";
+
       $param_arr = array(
         'sign_method' => "md5",
         'timestamp'=>date("Y-m-d H:i:s",time()),
@@ -65,6 +63,18 @@ class TaobaoController extends Controller
         'adzone_id'=>'338254662',
         'platform'=>2,
       );
+      if(isset($request->q)){
+          $param_arr['q']=$request->q;
+      }
+      if(isset($request->page_no)){
+          $param_arr['page_no']=$request->page_no;
+      }
+      if(isset($request->page_size)){
+          $param_arr['page_size']=$request->page_size;
+      }
+      if(isset($request->cat)){
+          $param_arr['cat']=$request->cat;
+      }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
     }
