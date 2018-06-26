@@ -23,6 +23,30 @@ class TaobaoController extends Controller
         ]);
     }
 
+    /*
+    @param string item_id
+    @return array ret
+    @note 获取淘宝单品详情
+    @auth Ren
+    @date 2017-09-27
+    */
+    public function product(Request $request){
+        $data = array();
+        if(!isset($request->num_iids)){
+          return response()->json([
+            'code'=>400,
+            'message'=>'num_iids required',
+            'data'=>$data,
+          ]);
+        }
+        $data = $this->getProduct($request);
+        return response()->json([
+          'code'=>200,
+          'message'=>'success',
+          'data'=>$data,
+        ]);
+    }
+
     public function coupons(Request $request){
       $data = $this->getCouponsList($request);
       return response()->json([
@@ -32,13 +56,23 @@ class TaobaoController extends Controller
       ]);
     }
 
+    public function coupon(Request $request){
+
+    }
+
+    private function getProduct(Request $request){
+      $taobao_api = "taobao.tbk.item.info.get";
+      return $this->getTaobaoData($request, $taobao_api);
+    }
+
     private function getProductList(Request $request){
       $taobao_api = "taobao.tbk.item.get";
       return $this->getTaobaoData($request, $taobao_api);
     }
 
     private function getCouponsList(Request $request){
-      $taobao_api = "taobao.tbk.dg.item.coupon.get";
+      //淘宝客基础接口：淘宝客物料下行-导购
+      $taobao_api = "taobao.tbk.dg.optimus.material";
       return $this->getTaobaoData($request, $taobao_api);
     }
 
@@ -52,6 +86,8 @@ class TaobaoController extends Controller
         'method'=> $taobao_api,
         'format'=> "json",
         'adzone_id'=>'338254662',
+        'site_id'=>'42362088',	
+        'material_id'=>3786,
         'platform'=>2,
       );
       if(isset($request->q)){
@@ -71,6 +107,12 @@ class TaobaoController extends Controller
       }
       if(isset($request->cat)){
           $param_arr['cat']=$request->cat;
+      }
+      if(isset($request->material_id)){
+          $param_arr['material_id']=$request->material_id;
+      }
+      if(isset($request->num_iids)){
+          $param_arr['num_iids']=$request->num_iids;
       }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
