@@ -15,40 +15,6 @@ a:hover{
     text-decoration: none;
     color: #44A6F8;
 }
-.green{
-    color:#59d9a4;
-
-}
-.green-light{
-    color:#41DFC4;
-}
-.red{
-    color:#FF585D;
-}
-.red-light{
-    color:#FF65AA;
-}
-.red-hot{
-    color:#FF1B65;
-}
-.pink{
-    color:#FF6CAF;
-}
-.blue{
-    color:#8378f4;
-}
-.blue-light{
-    color:#44A6F8;
-}
-.purple{
-    color:#E270D5;
-}
-.purple-light{
-    color:#8274F6;
-}
-.yellow{
-    color: #FFC147;
-}
 .header{
     border-bottom: solid 1px #E5EBEE;
     padding: 0px;
@@ -61,7 +27,7 @@ a:hover{
     text-decoration: none;
     font-weight: bold;
     font-size: 20px;
-    color: #41DFC4;
+    color: #13C48B;
     padding: 10px;
 }
 .logo:hover{
@@ -86,8 +52,7 @@ a:hover{
     color: #888;
 }
 .main{
-    margin-top:40px;
+    margin-top:40px auto;
     width: 90%;
     background-color: #fff;
-    box-shadow: 0 0 1px #ddd;
 }

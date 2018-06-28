@@ -1,7 +1,7 @@
 @extends('layout')
 @section('meta')
-<meta name="keywords" content="json,人工智能,自然语言处理,json实验室,实验室,json.cn"/>
-<meta name="description" content="Json中文网2017年成立实验室，对自然语言处理方向进行研究和探索，并推出一系列相关json接口及服务，降低相关技术门槛，提升用户体验"/>
+<meta name="keywords" content="json,人工智能,自然语言处理,json.cn"/>
+<meta name="description" content="Json中文网2017年开始对自然语言处理方向进行研究和探索，并推出一系列相关json接口及服务，降低相关技术门槛，提升用户体验"/>
 @endsection
 @section('title', '实验室')
 @section('style')
@@ -38,6 +38,17 @@
 @endsection
 @section('main')
 <main class="main container">
+  <div class="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+  </div>
+    <div class="row">
+      <div class="col-md-4">1</div>
+      <div class="col-md-4">2</div>
+      <div class="col-md-4">3</div>
+    </div>
     <div class="row">
         <div class="col-md-3" style="min-height: 550px;padding:0;" id="list-data" >
             <a class="abox" v-on:click="load(item.id)" :data-key="item.id" v-for="item in list">
@@ -49,7 +60,7 @@
             </a>
         </div>
 
-        <div class="col-md-9" style="border-left:solid 1px #fafafa;" id="api-data">
+        <div class="col-md-9" style="border-left:solid 5px #59d9a4;" id="api-data">
 
             <div style="padding:10px;text-align:center;border-bottom:solid 1px #f6f6f6;">
                 <h3>@{{api.name}}</h3>

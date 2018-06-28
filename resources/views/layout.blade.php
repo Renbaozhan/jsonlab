@@ -8,6 +8,8 @@
         <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="https://cdn.bootcss.com/responsive-nav.js/1.12/responsive-nav.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{{ URL::asset('/') }}css/app.css">
+        <link rel="stylesheet" href="{{ URL::asset('/') }}css/color.css">
+        <link rel="stylesheet" href="{{ URL::asset('/') }}css/spin.css">
         @yield('style')
     </head>
     <body>

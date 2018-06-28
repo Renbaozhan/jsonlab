@@ -100,14 +100,13 @@ class TaobaoController extends Controller
     }
 
     private function getCouponsList(Request $request){
-      //淘宝客基础接口：淘宝客物料下行-导购
+      //淘宝客基础接口：好券清单API【导购】
       $params = array(
-          'material_id'=>3786,
       );
       if(isset($request->material_id)){
-          $params['material_id']=$request->material_id;
+          $params['cat']=$request->cat;
       }
-      $taobao_api = "taobao.tbk.dg.optimus.material";
+      $taobao_api = "taobao.tbk.dg.item.coupon.get";
       return $this->getTaobaoData($request, $taobao_api, $params);
     }
 
