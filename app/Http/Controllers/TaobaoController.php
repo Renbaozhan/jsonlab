@@ -56,8 +56,13 @@ class TaobaoController extends Controller
       ]);
     }
 
-    public function coupon(Request $request){
-
+    public function password(Request $request){
+      $taobao_api = "taobao.tbk.tpwd.create";
+      $params = array(
+        'text'=>$request->text,
+        'url'=>$request->url,
+      );
+      return $this->getTaobaoData($request, $taobao_api, $params);
     }
 
     private function getProduct(Request $request){
@@ -72,11 +77,11 @@ class TaobaoController extends Controller
 
     private function getCouponsList(Request $request){
       //淘宝客基础接口：淘宝客物料下行-导购
-      $taobao_api = "taobao.tbk.dg.optimus.material";
+      $taobao_api = "taobao.tbk.dg.material.optional";
       return $this->getTaobaoData($request, $taobao_api);
     }
 
-    private function getTaobaoData(Request $request,$taobao_api){
+    private function getTaobaoData(Request $request,$taobao_api,$params=array()){
       $url = "http://gw.api.taobao.com/router/rest?";
       $param_arr = array(
         'sign_method' => "md5",
@@ -86,10 +91,11 @@ class TaobaoController extends Controller
         'method'=> $taobao_api,
         'format'=> "json",
         'adzone_id'=>'338254662',
-        'site_id'=>'42362088',	
+        'site_id'=>'42362088',
         'material_id'=>3786,
         'platform'=>2,
       );
+      $param_arr = array_merge($param_arr,$params);
       if(isset($request->q)){
           $param_arr['q']=$request->q;
       }

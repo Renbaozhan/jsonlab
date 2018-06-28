@@ -20,4 +20,4 @@ Route::get('nlp/wordcut/{text}', 'NlpController@wordcut');
 Route::any('taobao/products', 'TaobaoController@products');
 Route::any('taobao/product/{num_iids}', 'TaobaoController@product');
 Route::any('taobao/coupons', 'TaobaoController@coupons');
-Route::any('taobao/coupon/{}', 'TaobaoController@coupon');
+Route::any('taobao/password', 'TaobaoController@password');
