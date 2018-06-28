@@ -67,22 +67,42 @@ class TaobaoController extends Controller
 
     private function getProduct(Request $request){
       $taobao_api = "taobao.tbk.item.info.get";
-      return $this->getTaobaoData($request, $taobao_api);
-    }
-
-    private function getProductList(Request $request){
-      $taobao_api = "taobao.tbk.item.get";
-      $params = array(
-      );
       if(isset($request->num_iids)){
           $params['num_iids']=$request->num_iids;
       }
       return $this->getTaobaoData($request, $taobao_api, $params);
     }
 
+    private function getProductList(Request $request){
+      $taobao_api = "taobao.tbk.item.get";
+      $params = array(
+      );
+      if(isset($request->q)){
+          $params['q']=$request->q;
+      }
+      if(isset($request->fields)){
+          $params['fields']=$request->fields;
+      }
+      if(isset($request->sort)){
+          $params['sort']=$request->sort;
+      }
+      if(isset($request->page_no)){
+          $params['page_no']=$request->page_no;
+      }
+      if(isset($request->page_size)){
+          $params['page_size']=$request->page_size;
+      }
+      if(isset($request->cat)){
+          $params['cat']=$request->cat;
+      }
+
+      return $this->getTaobaoData($request, $taobao_api, $params);
+    }
+
     private function getCouponsList(Request $request){
       //淘宝客基础接口：淘宝客物料下行-导购
       $params = array(
+          'material_id'=>3786,
       );
       if(isset($request->material_id)){
           $params['material_id']=$request->material_id;
@@ -102,28 +122,9 @@ class TaobaoController extends Controller
         'format'=> "json",
         'adzone_id'=>'338254662',
         'site_id'=>'42362088',
-        'material_id'=>3786,
         'platform'=>2,
       );
       $param_arr = array_merge($param_arr,$params);
-      if(isset($request->q)){
-          $param_arr['q']=$request->q;
-      }
-      if(isset($request->fields)){
-          $param_arr['fields']=$request->fields;
-      }
-      if(isset($request->sort)){
-          $param_arr['sort']=$request->sort;
-      }
-      if(isset($request->page_no)){
-          $param_arr['page_no']=$request->page_no;
-      }
-      if(isset($request->page_size)){
-          $param_arr['page_size']=$request->page_size;
-      }
-      if(isset($request->cat)){
-          $param_arr['cat']=$request->cat;
-      }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
     }
