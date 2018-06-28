@@ -72,13 +72,23 @@ class TaobaoController extends Controller
 
     private function getProductList(Request $request){
       $taobao_api = "taobao.tbk.item.get";
-      return $this->getTaobaoData($request, $taobao_api);
+      $params = array(
+      );
+      if(isset($request->num_iids)){
+          $params['num_iids']=$request->num_iids;
+      }
+      return $this->getTaobaoData($request, $taobao_api, $params);
     }
 
     private function getCouponsList(Request $request){
       //淘宝客基础接口：淘宝客物料下行-导购
-      $taobao_api = "taobao.tbk.dg.material.optional";
-      return $this->getTaobaoData($request, $taobao_api);
+      $params = array(
+      );
+      if(isset($request->material_id)){
+          $params['material_id']=$request->material_id;
+      }
+      $taobao_api = "taobao.tbk.dg.optimus.material";
+      return $this->getTaobaoData($request, $taobao_api, $params);
     }
 
     private function getTaobaoData(Request $request,$taobao_api,$params=array()){
@@ -113,12 +123,6 @@ class TaobaoController extends Controller
       }
       if(isset($request->cat)){
           $param_arr['cat']=$request->cat;
-      }
-      if(isset($request->material_id)){
-          $param_arr['material_id']=$request->material_id;
-      }
-      if(isset($request->num_iids)){
-          $param_arr['num_iids']=$request->num_iids;
       }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
