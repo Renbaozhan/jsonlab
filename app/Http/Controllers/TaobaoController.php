@@ -86,12 +86,6 @@ class TaobaoController extends Controller
       if(isset($request->sort)){
           $params['sort']=$request->sort;
       }
-      if(isset($request->page_no)){
-          $params['page_no']=$request->page_no;
-      }
-      if(isset($request->page_size)){
-          $params['page_size']=$request->page_size;
-      }
       if(isset($request->cat)){
           $params['cat']=$request->cat;
       }
@@ -103,7 +97,7 @@ class TaobaoController extends Controller
       //淘宝客基础接口：好券清单API【导购】
       $params = array(
       );
-      if(isset($request->material_id)){
+      if(isset($request->cat)){
           $params['cat']=$request->cat;
       }
       $taobao_api = "taobao.tbk.dg.item.coupon.get";
@@ -124,6 +118,12 @@ class TaobaoController extends Controller
         'platform'=>2,
       );
       $param_arr = array_merge($param_arr,$params);
+      if(isset($request->page_no)){
+          $params['page_no']=$request->page_no;
+      }
+      if(isset($request->page_size)){
+          $params['page_size']=$request->page_size;
+      }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
     }
