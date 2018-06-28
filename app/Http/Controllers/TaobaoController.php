@@ -100,6 +100,9 @@ class TaobaoController extends Controller
       if(isset($request->cat)){
           $params['cat']=$request->cat;
       }
+      if(isset($request->q)){
+          $params['q']=$request->q;
+      }
       $taobao_api = "taobao.tbk.dg.item.coupon.get";
       return $this->getTaobaoData($request, $taobao_api, $params);
     }
@@ -119,10 +122,10 @@ class TaobaoController extends Controller
       );
       $param_arr = array_merge($param_arr,$params);
       if(isset($request->page_no)){
-          $params['page_no']=$request->page_no;
+          $param_arr['page_no']=$request->page_no;
       }
       if(isset($request->page_size)){
-          $params['page_size']=$request->page_size;
+          $param_arr['page_size']=$request->page_size;
       }
       $param = $this->getParam($param_arr);
       return json_decode(file_get_contents($url.$param),true);
