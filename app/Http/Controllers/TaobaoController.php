@@ -86,6 +86,9 @@ class TaobaoController extends Controller
       if(isset($request->sort)){
           $params['sort']=$request->sort;
       }
+      if(isset($request->has_coupon)){
+          $params['has_coupon']=$request->has_coupon;
+      }
       if(isset($request->cat)){
           $params['cat']=$request->cat;
       }
