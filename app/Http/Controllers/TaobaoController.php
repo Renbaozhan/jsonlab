@@ -74,7 +74,7 @@ class TaobaoController extends Controller
     }
 
     private function getProductList(Request $request){
-      $taobao_api = "taobao.tbk.item.get";
+      $taobao_api = "taobao.tbk.dg.material.optional";
       $params = array(
       );
       if(isset($request->q)){
