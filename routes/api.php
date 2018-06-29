@@ -16,8 +16,13 @@ Use App\Service;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('nlp/wordcut/{text}', 'NlpController@wordcut');
+
 Route::any('taobao/products', 'TaobaoController@products');
 Route::any('taobao/product/{num_iids}', 'TaobaoController@product');
 Route::any('taobao/coupons', 'TaobaoController@coupons');
 Route::any('taobao/password', 'TaobaoController@password');
+
+Route::any('nlp/text/label', 'NlpController@wordcut');
+Route::any('nlp/text/extract', 'NlpController@wordcut');
+Route::any('nlp/text/classify', 'NlpController@wordcut');
+Route::any('nlp/text/motion', 'NlpController@wordcut');

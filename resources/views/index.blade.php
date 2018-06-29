@@ -13,19 +13,20 @@
     border-bottom:solid 1px #f6f6f6;
     color: #666;
 }
-.abox.current {
-    background-color: #fff;
-    box-shadow: 1px 0px 1px #eee;
+a.abox.current {
+    margin-right: -2px;
+    border-top:solid 1px #eee;
     border-bottom:solid 1px #eee;
-    border-left: solid 1px #eee;
-    margin-left: -5px;
-    width: 102%;
+    border-right:solid 1px #fff;
     font-weight: bold;
+    background: #fff;
+    color:#4285f4;
+    z-index: 10000;
 }
 
 .abox .title{
     font-size:14px;
-    padding:5px;
+    padding:10px;
 }
 .abox .title i{
     font-size:14px;
@@ -37,59 +38,77 @@
 </style>
 @endsection
 @section('main')
-<main class="main container">
-  <div class="spinner">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-  </div>
-    <div class="row">
-      <div class="col-md-4">1</div>
-      <div class="col-md-4">2</div>
-      <div class="col-md-4">3</div>
+<main class="main container" style="text-align:center;">
+
+    <div class="row" style="text-align:center;min-width:800px;padding:50px 0;font-size:14px;" >
+      <h4 style="text-align:left;padding-left:55px;padding-bottom:10px;">基础方向</h4>
+      <div class="col-md-3  col-md-offset-1 card">
+        <h4 ><span class="red">词</span>性标注</h4>
+        <div>
+            对文本资料进行分词后，对分词结果进行词性标注
+        </div>
+      </div>
+      <div class="col-md-3 card">
+        <h4 ><span class="green">关</span>键词提取</h4>
+        <div>
+            从文本资料中提取关键词，并给出关键词权重
+        </div>
+      </div>
+      <div class="col-md-3 card">
+        <h4 ><span class="blue">文</span>本分类</h4>
+        <div>
+            根据特定规则对文本资料进行分类，给出分类信息和结果
+        </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-3" style="min-height: 550px;padding:0;" id="list-data" >
-            <a class="abox" v-on:click="load(item.id)" :data-key="item.id" v-for="item in list">
+
+    <h4 style="text-align:left;padding-left:45px;padding-bottom:10px;">相关接口</h4>
+
+    <div class="row"
+    style="padding:0;text-align:center;min-width:800px;width:98%;margin:auto;">
+        <div class="col-md-3"
+          style="z-index: 100;text-align: center;min-height: 550px;padding:0;margin:0 auto;"
+          id="list-data" >
+            <a class="abox" v-for="(item,index) in list" :class="{'current': index === selected}"  v-on:click="load(index)" :data-key="item.id" >
                 <div class="title">
-                    <i :class="item.icon"></i>
                     @{{item.name}}
                 </div>
-                <div class="abstract">@{{item.note}}</div>
             </a>
         </div>
 
-        <div class="col-md-9" style="border-left:solid 5px #59d9a4;" id="api-data">
+        <div class="col-md-9" style="z-index: 0;text-align: left;border-left:solid 1px #eee;" id="api-data">
 
-            <div style="padding:10px;text-align:center;border-bottom:solid 1px #f6f6f6;">
-                <h3>@{{api.name}}</h3>
-            </div>
+            <div class="row" style="margin:10px;padding:10px;border-bottom:solid 1px #f6f6f6;line-height:30px;">
+                <div class="row" style="padding:10px;">
+                  <div class="col-md-6">
+                      <div>试用token：</div>
+                      <code class="green" style="background-color:#eee;padding:5px;">jsoncn</code>
+                  </div>
+                  <div class="col-md-6">
+                      <div>请求方式:</div>
+                      <span>@{{api.method}}</span>
+                  </div>
+                </div>
+                <div class="row" style="padding:10px;">
+                  <div class="col-md-6">
+                      <div>单IP访问限制：</div>
+                      <span class="red">@{{api.ipLimit}}次／秒</span>
+                  </div>
 
-            <div class="row" style="margin:10px;padding:10px 0;border-bottom:solid 1px #f6f6f6;line-height:25px;">
+                  <div class="col-md-6">
+                      <div>单日访问限制：</div>
+                      <span class="red">@{{api.dailyCallLimit}}次／天</span>
+                  </div>
+                </div>
+                <div class="row" style="padding:10px;">
+                  <div class="col-md-12">
+                      <div>接口地址：</div>
+                      <a  style="text-decoration:underline;" href="{{ URL::asset('/') }}api/wordcut" target="_blank">
+                          {{ URL::asset('/') }}@{{api.address}}
+                      </a>
+                  </div>
+                </div>
 
-                <div class="col-md-6">
-                    <div>试用token：</div>
-                    <code class="green-light" style="background-color:#eee;padding:5px;">登录后可见</code>
-                </div>
-                <div class="col-md-6">
-                    <div>请求方式</div>
-                    <span>@{{api.method}}</span>
-                </div>
-                <div class="col-md-6">
-                    <div>单IP访问限制：</div>
-                    <span class="red-light">@{{api.ipLimit}}次／秒</span>
-                </div>
-                <div class="col-md-6">
-                    <div>单日访问限制：</div>
-                    <span class="red-light">@{{api.dailyCallLimit}}次／天</span>
-                </div>
-                <div class="col-md-12">
-                    <div>接口地址：</div>
-                    <a class="blue-light" style="text-decoration:underline;" href="{{ URL::asset('/') }}api/wordcut" target="_blank">
-                        {{ URL::asset('/') }}@{{api.address}}
-                    </a>
-                </div>
             </div>
 
             <div  class="row" style="font-size:10px;padding:0 20px;border-bottom:solid 1px #f6f6f6;">
@@ -103,7 +122,7 @@
                 </div>
             </div>
 
-            <div  class="row" style="font-size:10px;padding:0 20px;">
+            <div  class="row" style="font-size:12px;padding:0 20px;">
                 <div class="col-md-6" style="padding:20px;">
                     <h6>参数说明</h6>
                     <table class="table">
@@ -138,12 +157,17 @@
         </div>
 
     </div>
+    <!--<div class="spinner">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+    </div>-->
 </main>
 @endsection
 @section('script')
 <script src="{{ URL::asset('/') }}js/jquery.json.js"></script>
 <script>
-var init_id = 1;
 var app = new Vue({
     el: '#api-data',
     data: {
@@ -153,20 +177,23 @@ var app = new Vue({
 var applist = new Vue({
     el: '#list-data',
     data: {
-        list: []
+        list: [],
+        selected: 0,
     },
     methods: {
-        load: function (id) {
-            loadService(id);
+        load: function (index) {
+            this.selected = index;
+            loadService(index);
         }
     }
 
 });
 
-loadService(init_id);
+
 loadServiceList();
-function loadService(id){
-    $.get('/services/'+id,function(response){
+
+function loadService(index){
+    $.get('/services/'+applist.list[index].id,function(response){
         response.paramNote = JSON.parse(response.paramNote);
         response.resultNote = JSON.parse(response.resultNote);
         app.api = response;
@@ -179,6 +206,7 @@ function loadService(id){
 function loadServiceList(){
     $.get('/services',function(response){
         applist.list = response;
+        loadService(applist.selected);
     });
 }
 </script>
