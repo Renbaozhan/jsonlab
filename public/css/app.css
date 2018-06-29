@@ -24,7 +24,8 @@ a:hover{
     box-shadow: 0 0px 1px #eee;
 }
 .footer{
-    margin: 20px
+    clear:both;
+    margin: 20px;
     padding:20px;text-align:center;color:#999;
 }
 .logo{

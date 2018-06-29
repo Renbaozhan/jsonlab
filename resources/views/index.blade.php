@@ -41,7 +41,7 @@ a.abox.current {
 <main class="main container" style="text-align:center;">
 
     <div class="row" style="text-align:center;min-width:800px;padding:50px 0;font-size:14px;" >
-      <h4 style="text-align:left;padding-left:55px;padding-bottom:10px;">基础方向</h4>
+      <h4 style="text-align:left;padding-left:55px;padding-bottom:10px;">探索发现</h4>
       <div class="col-md-3  col-md-offset-1 card">
         <h4 ><span class="red">词</span>性标注</h4>
         <div>
