@@ -35,6 +35,7 @@ a.abox.current {
 .abox .abstract{
     padding:0px 10px;
 }
+h5{font-size: 14px;}
 </style>
 @endsection
 @section('main')
@@ -43,19 +44,19 @@ a.abox.current {
     <div class="row" style="text-align:center;min-width:800px;padding:50px 0;font-size:14px;" >
       <h4 style="text-align:left;padding-left:55px;padding-bottom:10px;">探索发现</h4>
       <div class="col-md-3  col-md-offset-1 card">
-        <h4 ><span class="red">词</span>性标注</h4>
+        <h5><span class="red">词</span>性标注</h5>
         <div>
             对文本资料进行分词后，对分词结果进行词性标注
         </div>
       </div>
       <div class="col-md-3 card">
-        <h4 ><span class="green">关</span>键词提取</h4>
+        <h5 ><span class="green">关</span>键词提取</h5>
         <div>
             从文本资料中提取关键词，并给出关键词权重
         </div>
       </div>
       <div class="col-md-3 card">
-        <h4 ><span class="blue">文</span>本分类</h4>
+        <h5 ><span class="blue">文</span>本分类</h5>
         <div>
             根据特定规则对文本资料进行分类，给出分类信息和结果
         </div>
