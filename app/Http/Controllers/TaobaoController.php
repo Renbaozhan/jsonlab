@@ -56,6 +56,15 @@ class TaobaoController extends Controller
       ]);
     }
 
+    public function nine(Request $request){
+      $data = $this->getProductList($request);
+      return response()->json([
+        'code'=>200,
+        'message'=>'success',
+        'data'=>$data,
+      ]);
+    }
+
     public function password(Request $request){
       $taobao_api = "taobao.tbk.tpwd.create";
       $params = array(
@@ -88,6 +97,12 @@ class TaobaoController extends Controller
       }
       if(isset($request->has_coupon)){
           $params['has_coupon']=$request->has_coupon;
+      }
+      if(isset($request->start_price)){
+          $params['start_price']=$request->start_price;
+      }
+      if(isset($request->end_price)){
+          $params['end_price']=$request->end_price;
       }
       if(isset($request->cat)){
           $params['cat']=$request->cat;
