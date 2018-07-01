@@ -104,6 +104,9 @@ class TaobaoController extends Controller
       if(isset($request->end_price)){
           $params['end_price']=$request->end_price;
       }
+      if(isset($request->need_free_shipment)){
+          $params['need_free_shipment']=$request->need_free_shipment;
+      }
       if(isset($request->cat)){
           $params['cat']=$request->cat;
       }
