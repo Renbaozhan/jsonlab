@@ -47,6 +47,13 @@ class TaobaoController extends Controller
         ]);
     }
 
+    /*
+    @param string item_id
+    @return array ret
+    @note 获取淘宝优惠券列表
+    @auth Ren
+    @date 2017-09-27
+    */
     public function coupons(Request $request){
       $data = $this->getCouponsList($request);
       return response()->json([
@@ -56,6 +63,13 @@ class TaobaoController extends Controller
       ]);
     }
 
+    /*
+    @param string item_id
+    @return array ret
+    @note 获取淘宝9块9包邮数据
+    @auth Ren
+    @date 2017-09-27
+    */
     public function nine(Request $request){
       $data = $this->getProductList($request);
       return response()->json([
@@ -64,7 +78,57 @@ class TaobaoController extends Controller
         'data'=>$data,
       ]);
     }
+    /*
+    @param string item_id
+    @return array ret
+    @note 获取淘宝聚划算数据接口
+    @auth Ren
+    @date 2017-09-27
+    */
+    public function juhuasuan(Request $request){
 
+
+      return $this->formatResponse(200,"success",$data);
+    }
+
+    /*
+    @param string item_id
+    @return array ret
+    @note 获取淘宝淘抢购数据接口
+    @auth Ren
+    @date 2017-09-27
+    */
+    public function taoqianggou(Request $request){
+      $params = array(
+        'fields'=>"user_type,num_iid,click_url,pic_url,reserve_price,zk_final_price,total_amount,sold_num,title,category_name,start_time,end_time",
+      );
+      if(isset($request->page_no)){
+          $params['page_no']=$request->page_no;
+      }
+      if(isset($request->page_size)){
+          $params['page_size']=$request->page_size;
+      }
+      if(isset($request->start_time)){
+          $params['start_time']=$request->start_time;
+      }else{
+          $params['start_time']=date("Y-m-d H:00:00", time()-0*60*60);
+      }
+      if(isset($request->end_time)){
+          $params['end_time	']=$request->end_time	;
+      }else{
+          $params['end_time']=date("Y-m-d H:00:00",time()+1*60*60);
+      }
+      $taobao_api = "taobao.tbk.ju.tqg.get";
+
+      return $this->getTaobaoData($request, $taobao_api, $params);
+    }
+    /*
+    @param string item_id
+    @return array ret
+    @note 淘口令转换接口
+    @auth Ren
+    @date 2017-09-27
+    */
     public function password(Request $request){
       $taobao_api = "taobao.tbk.tpwd.create";
       $params = array(
@@ -127,6 +191,27 @@ class TaobaoController extends Controller
       $taobao_api = "taobao.tbk.dg.item.coupon.get";
       return $this->getTaobaoData($request, $taobao_api, $params);
     }
+    private function getJuhuasuanList(Request $request){
+      //淘宝客基础接口：聚划算商品搜索接口
+      $params = array(
+        'pid'=>'mm_11711491_42362088_338254662',
+      );
+      if(isset($request->postage)){
+          $params['postage']=$request->postage;
+      }
+      if(isset($request->status)){
+          $params['status']=$request->status;
+      }
+      if(isset($request->current_page)){
+          $params['current_page']=$request->current_page;
+      }
+      if(isset($request->page_size)){
+          $params['page_size']=$request->page_size;
+      }
+      $taobao_api = "taobao.ju.items.search";
+      $param_top_item_query = array('param_top_item_query' => $params );
+      return $this->getTaobaoData($request, $taobao_api, $params);
+    }
 
     private function getTaobaoData(Request $request,$taobao_api,$params=array()){
       $url = "http://gw.api.taobao.com/router/rest?";
@@ -166,6 +251,13 @@ class TaobaoController extends Controller
       return $param;
     }
 
+    private function formatResponse($code,$msg,$data){
+      return response()->json([
+        'code'=>$code,
+        'message'=>$msg,
+        'data'=>$data,
+      ]);
+    }
     protected function generateSign($params,$app_secret){
   		ksort($params);
   		$stringToBeSigned = $app_secret;
