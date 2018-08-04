@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::any('taobao/products', 'TaobaoController@products');
+Route::any('taobao/categories', 'TaobaoController@categories');
 Route::any('taobao/product/{num_iids}', 'TaobaoController@product');
 Route::any('taobao/coupons', 'TaobaoController@coupons');
 Route::any('taobao/nine', 'TaobaoController@nine');

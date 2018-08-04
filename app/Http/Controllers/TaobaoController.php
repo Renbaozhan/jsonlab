@@ -24,6 +24,22 @@ class TaobaoController extends Controller
     }
 
     /*
+    @param string text
+    @return array ret
+    @note 获取淘宝类目列表
+    @auth Ren
+    @date 2017-09-27
+    */
+    public function categories(Request $request){
+        $data = $this->getCategoryList($request);
+        return response()->json([
+          'code'=>200,
+          'message'=>'success',
+          'data'=>$data,
+        ]);
+    }
+
+    /*
     @param string item_id
     @return array ret
     @note 获取淘宝单品详情
@@ -89,6 +105,22 @@ class TaobaoController extends Controller
 
 
       return $this->formatResponse(200,"success",$data);
+    }
+
+    private function getCategoryList($request){
+      $result = array(
+        array('name' => "今日精选", "cid"=>3756),
+        array('name' => "女装", "cid"=>16),
+        array('name' => "男装", "cid"=>30),
+        array('name' => "母婴", "cid"=>35),
+        array('name' => "食品", "cid"=>50002766),
+        array('name' => "宠物", "cid"=>29),
+        array('name' => "数码家电", "cid"=>50008090),
+        array('name' => "家居家装", "cid"=>21),
+        array('name' => "汽车用品", "cid"=>26),
+        array('name' => "成人用品", "cid"=>2813),
+      );
+      return $result;
     }
 
     /*
@@ -270,5 +302,7 @@ class TaobaoController extends Controller
   		$stringToBeSigned .= $app_secret;
   		return strtoupper(md5($stringToBeSigned));
   	}
+
+
 
 }
