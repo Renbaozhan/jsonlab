@@ -109,7 +109,7 @@ class TaobaoController extends Controller
 
     private function getCategoryList($request){
       $result = array(
-        array('name' => "今日精选", "cid"=>"16,30,35,29,21,26"),
+        array('name' => "今日精选", "cid"=>""),
         array('name' => "女装", "cid"=>16),
         array('name' => "男装", "cid"=>30),
         array('name' => "母婴", "cid"=>35),
