@@ -170,6 +170,23 @@ class TaobaoController extends Controller
       return $this->getTaobaoData($request, $taobao_api, $params);
     }
 
+    /*
+    @param string start_time
+    @param string fields
+    @return array ret
+    @note 淘口令转换接口
+    @auth Ren
+    @date 2019-01-07
+    */
+    public function orders(Request $request){
+      $data = $this->getOrderList($request);
+      return response()->json([
+        'code'=>200,
+        'message'=>'success',
+        'data'=>$data,
+      ]);
+    }
+
     private function getProduct(Request $request){
       $taobao_api = "taobao.tbk.item.info.get";
       if(isset($request->num_iids)){
@@ -242,6 +259,22 @@ class TaobaoController extends Controller
       }
       $taobao_api = "taobao.ju.items.search";
       $param_top_item_query = array('param_top_item_query' => $params );
+      return $this->getTaobaoData($request, $taobao_api, $params);
+    }
+
+    private function getOrderList(Request $request){
+      //淘宝客订单查询
+      $params = array(
+        'fields'=>'tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time,tk3rd_pub_id,tk3rd_site_id,tk3rd_adzone_id,relation_id,tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time,tk3rd_pub_id,tk3rd_site_id,tk3rd_adzone_id,special_id,click_time',
+        'start_time'=>date("Y-m-d H:i:s",time()-1*24*3600),
+      );
+      if(isset($request->fields)){
+          $params['fields']=$request->fields;
+      }
+      if(isset($request->start_time)){
+          $params['start_time']=$request->start_time;
+      }
+      $taobao_api = "taobao.tbk.order.get";
       return $this->getTaobaoData($request, $taobao_api, $params);
     }
 

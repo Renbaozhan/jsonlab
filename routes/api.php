@@ -25,6 +25,7 @@ Route::any('taobao/nine', 'TaobaoController@nine');
 Route::any('taobao/juhuasuan', 'TaobaoController@juhuasuan');
 Route::any('taobao/taoqianggou', 'TaobaoController@taoqianggou');
 Route::any('taobao/password', 'TaobaoController@password');
+Route::any('taobao/orders', 'TaobaoController@orders');
 
 Route::any('nlp/text/label', 'NlpController@wordcut');
 Route::any('nlp/text/extract', 'NlpController@wordcut');
